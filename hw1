@@ -1,0 +1,29 @@
+name = "Alice"
+age = "25"
+height = "170"
+print (name,age,height)
+
+num1 = float(input("Введите первое число: "))
+num2 = float(input("Введите второе число: "))
+string1 = input("Введите первую строку: ")
+string2 = input("Введите вторую строку: ")
+print("Вы ввели числа:", num1, "и", num2)
+print("Вы ввели строки:", string1, "и", string2)
+
+from idlib import id
+obj = "Привет, мир!"
+obj_id = id(obj)
+print("Адрес памяти объекта:", obj_id)
+
+time_input = input("Введите время в секундах:")
+total_seconds = int(time_input)
+hours = total_seconds // 3600
+minutes = (total_seconds % 3600) // 60
+seconds = total_seconds % 60
+print("Часы:", hours)
+print("Минуты:", minutes)
+print("Секунды:", seconds)
+
+n = int(input("Введите число n (от 1 до 9): "))
+sum_of_numbers = n + (n * 11) + (n * 111)
+print("Сумма чисел n + nn + nnn=", sum_of_numbers)
