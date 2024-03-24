@@ -1,1 +1,17 @@
+1import json
 
+# a. Get a list of INNs from the file traders.txt
+inns = []
+with open('traders.txt', 'r') as f:
+   for line in f:
+       inns.append(line.strip())
+
+# b. Find information about organizations with these INNs in the file traders.json
+with open('traders.json', 'r') as f:
+   data = json.load(f)
+   organizations = [org for org in data if org['INN'] in inns]
+
+# c. Save information about INNs, OGRNs, and addresses of organizations from the file traders.txt to the file traders.csv
+with open('traders.csv', 'w') as f:
+    for org in organizations:
+       f.write(f"{org['INN']};{org['OGRN']};{org['address']}\n")
