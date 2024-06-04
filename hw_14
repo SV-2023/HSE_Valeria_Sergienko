@@ -1,0 +1,58 @@
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
+# Функция старта бота
+def start(update: Update, context: CallbackContext) -> None:
+    # Создаем кнопки
+    keyboard = [
+        [KeyboardButton("Информация о боте")],
+        [KeyboardButton("Помощь")],
+        [KeyboardButton("Контактные данные")]
+    ]
+
+    # Создаем разметку клавиатуры
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard=True, one_time_keyboard=True)
+
+    # Приветственное сообщение с меню
+    update.message.reply_text(
+        "Добро пожаловать в бот-справочник! Выберите опцию из меню:",
+        reply_markup=reply_markup
+    )
+
+# Функция обработки текстовых сообщений
+def handle_message(update: Update, context: CallbackContext) -> None:
+    text = update.message.text
+
+    if text == "Информация о боте":
+        update.message.reply_text("Этот бот создан для предоставления справочной информации.")
+    elif text == "Помощь":
+        update.message.reply_text("Вы можете выбрать опцию из меню, чтобы получить нужную информацию.")
+    elif text == "Контактные данные":
+        update.message.reply_text("Вы можете связаться с нами по email: support@example.com.")
+    else:
+        update.message.reply_text("Пожалуйста, выберите опцию из меню.")
+
+def main() -> None:
+    # Ваш токен API
+    TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN'
+
+    # Создаем Updater и передаем ему токен бота
+    updater = Updater(TOKEN)
+
+    # Получаем диспетчера для регистрации обработчиков
+    dispatcher = updater.dispatcher
+
+    # Регистрируем обработчик команд /start
+    dispatcher.add_handler(CommandHandler("start", start))
+
+    # Регистрируем обработчик текстовых сообщений
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_message))
+
+    # Запускаем бота
+    updater.start_polling()
+
+    # Останавливаем бота при завершении работы
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
